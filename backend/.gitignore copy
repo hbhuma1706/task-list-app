@@ -1,0 +1,34 @@
+# Node
+node_modules/
+dist/
+.env
+
+# Java / Spring
+target/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# System folders (IMPORTANT)
+.android/
+.azure/
+.azure-kubelogin/
+.docker/
+.cache/
+.conda/
+.config/
+.dotnet/
+.eclipse/
+.jupyter/
+.kube/
+.ipynb_checkpoints/
+.VirtualBox/
+
+# Git
+.gitconfig
