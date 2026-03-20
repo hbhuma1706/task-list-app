@@ -13,17 +13,26 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
+
+    if (!username.trim() || !password.trim()) {
+      setError('Please enter both username and password.');
+      return;
+    }
+
     setLoading(true);
     setError('');
+
     try {
       const res = await api.post('/auth/login', { username, password });
-      console.log("FULL RESPONSE: ", res.data);
-      console.log("Access Token: ", res.data.accessToken);
-      console.log("Refresh Token: ", res.data.refreshToken);
       login(res.data);
       navigate('/tasks');
-    } catch {
-      setError('Invalid username or password.');
+    } catch (err) {
+      if (err.response?.status === 401) {
+        setError('Invalid username or password.');
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -36,7 +45,11 @@ export default function LoginPage() {
         <p className="login-subtitle">Sign in to continue</p>
 
         {error && (
-          <div className="alert alert-error" role="alert" aria-live="assertive">
+          <div
+            className="alert alert-error"
+            role="alert"
+            aria-live="assertive"
+          >
             {error}
           </div>
         )}
